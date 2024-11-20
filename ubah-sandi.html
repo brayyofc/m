@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ubah Sandi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+        }
+
+        .interactive-text {
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .interactive-text:hover {
+            color: #007bff;
+            text-shadow: 0 0 10px rgba(0, 123, 255, 0.8), 0 0 20px rgba(0, 123, 255, 0.8);
+            cursor: pointer;
+        }
+
+        .loading {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            color: #007bff;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading" id="loading">Loading...</div>
+    <h1>Ubah Sandi</h1>
+
+    <div class="form-container">
+        <div class="form-group">
+            <label for="current-password">Kata Sandi Lama</label>
+            <input type="password" id="current-password" placeholder="Masukkan kata sandi lama">
+        </div>
+        <div class="form-group">
+            <label for="new-password">Kata Sandi Baru</label>
+            <input type="password" id="new-password" placeholder="Masukkan kata sandi baru">
+        </div>
+        <div class="form-group">
+            <label for="confirm-password">Konfirmasi Kata Sandi Baru</label>
+            <input type="password" id="confirm-password" placeholder="Konfirmasi kata sandi baru">
+        </div>
+        <button id="submit-button" onclick="submitPasswordChange()">Ubah Sandi</button>
+    </div>
+
+    <script>
+        function submitPasswordChange() {
+            document.getElementById('loading').classList.add('show');
+            setTimeout(() => {
+                alert("Kata sandi berhasil diubah!");
+                document.getElementById('loading').classList.remove('show');
+                window.location.href = 'dashboard.html'; // Kembali ke dashboard setelah perubahan
+            }, 2000); // Simulasi loading 2 detik
+        }
+    </script>
+</body>
+</html>

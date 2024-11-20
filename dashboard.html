@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        /* General styles */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        h1, h2 {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Light theme */
+        body.light-theme {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        header.light-theme, footer.light-theme {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .sidebar.light-theme {
+            background-color: #007bff;
+        }
+
+        .menu-item.light-theme {
+            background: #0056b3;
+        }
+
+        /* Dark theme */
+        body.dark-theme {
+            background-color: #121212;
+            color: #f5f5f5;
+        }
+
+        header.dark-theme, footer.dark-theme {
+            background-color: #1e1e1e;
+            color: #f5f5f5;
+        }
+
+        .sidebar.dark-theme {
+            background-color: #1e1e1e;
+        }
+
+        .menu-item.dark-theme {
+            background: #333;
+        }
+
+        /* Glowing effect for interactive text */
+        .interactive-text {
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .interactive-text:hover {
+            color: #007bff;
+            text-shadow: 0 0 10px rgba(0, 123, 255, 0.8), 0 0 20px rgba(0, 123, 255, 0.8);
+            cursor: pointer;
+        }
+
+        /* Header styles */
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            width: 250px;
+            background-color: #007bff;
+            color: #fff;
+            position: fixed;
+            height: 100vh;
+            right: -250px;
+            transition: right 0.3s ease-in-out;
+            box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar.visible {
+            right: 0;
+        }
+
+        .menu-item {
+            padding: 15px 20px;
+            margin: 10px 0;
+            background: #0056b3;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .menu-item:hover {
+            background: #0069d9;
+            color: #fff;
+        }
+
+        /* Sidebar toggle button */
+        .menu-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            padding: 10px 15px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+
+        .menu-toggle:hover {
+            background: #0056b3;
+        }
+
+        /* Main content styles */
+        .main {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Loading spinner */
+        .loading {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            color: #007bff;
+        }
+        
+        /* Effect for loading */
+        .loading.show {
+            display: block;
+        }
+    </style>
+</head>
+<body class="light-theme">
+    <!-- Header -->
+    <header class="light-theme">
+        <h1>selamat datang bro</h1>
+    </header>
+
+    <!-- Sidebar -->
+    <div class="sidebar light-theme" id="sidebar">
+        <h2>menu fitur</h2>
+        <div class="menu-item light-theme" onclick="showContent('dashboard')">Dashboard</div>
+        <div class="menu-item light-theme" onclick="showContent('api-management')">API Management</div>
+        <div class="menu-item light-theme" onclick="showContent('chat-gpt')">Chat GPT</div>
+        <div class="menu-item light-theme" onclick="showContent('settings')">Pengaturan</div>
+        <div class="menu-item light-theme" onclick="toggleTheme()">Ganti Tema</div>
+    </div>
+
+    <!-- Sidebar toggle button -->
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <!-- Main Content -->
+    <div class="main" id="mainContent">
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="content-section">
+            <h1>Dashboard Utama</h1>
+            <div class="cards">
+                <div class="card">
+                    <p>Jumlah apikey</p>
+                    <h2>1200</h2>
+                </div>
+                <div class="card">
+                    <p>Jumlah online</p>
+                    <h2>50</h2>
+                </div>
+                <div class="card">
+                    <p>Total premium</p>
+                    <h2>30</h2>
+                </div>
+                <div class="card">
+                    <p>Waktu</p>
+                    <h2 id="current-time">Loading...</h2>
+                </div>
+                <div class="card">
+                    <p>Tanggal</p>
+                    <h2 id="current-date">Loading...</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- API Management Section -->
+        <div id="api-management" class="content-section hidden">
+            <h1>API Management</h1>
+            <p>Kelola dan buat API Key Anda untuk digunakan dengan layanan kami.</p>
+            <div class="apikey-container">
+                <h3>Default API Key:</h3>
+                <div class="apikey" id="default-apikey">AwanBrayy010308</div>
+            </div>
+            <div class="apikey-container">
+                <h3>Generate New API Key:</h3>
+                <button onclick="generateApiKey()">Generate API Key</button>
+                <div class="apikey" id="new-apikey"></div>
+            </div>
+            <div class="note">
+                <p>API Key akan digunakan untuk mengakses endpoint di <b>https://api.betabotz.eu.org</b>.</p>
+                <p>Pastikan API Key Anda dirahasiakan!</p>
+            </div>
+        </div>
+
+        <div id="chat-gpt" class="content-section hidden">
+            <h1>bot wanz</h1>
+            <p>Berinteraksi dengan pelanggan dan menawarkan produk langsung melalui bot.</p>
+            <iframe 
+                src="https://cdn.botpress.cloud/webchat/v2.2/shareable.html?configUrl=https://files.bpcontent.cloud/2024/11/18/21/20241118215809-PFIMU99F.json&botId=d84facd6-268f-4825-bd87-8ecc6dd07014">
+            </iframe>
+        </div>
+
+        <!-- Pengaturan Section -->
+        <div id="settings" class="content-section hidden">
+            <h1>Pengaturan</h1>
+            <p>Atur preferensi Anda di sini.</p>
+            <div class="menu-item interactive-text" onclick="changePassword()">Ubah Sandi</div>
+            <div class="menu-item interactive-text" onclick="logout()">Logout</div>
+        </div>
+    </div>
+
+    <footer class="light-theme">
+        <p>&copy; 2024 API WANZOFC.</p>
+    </footer>
+
+    <div class="loading" id="loading">Loading...</div>
+
+    <script>
+        let sidebarVisible = false;
+
+        function toggleSidebar() {
+            sidebarVisible = !sidebarVisible;
+            const sidebar = document.getElementById("sidebar");
+            sidebar.classList.toggle("visible", sidebarVisible);
+        }
+
+        function showContent(section) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(el => el.classList.add('hidden'));
+
+            const selectedSection = document.getElementById(section);
+            selectedSection.classList.remove('hidden');
+        }
+
+        function generateApiKey() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let apiKey = '';
+            for (let i = 0; i < 16; i++) {
+                apiKey += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById("new-apikey").textContent = apiKey;
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const isLight = body.classList.contains("light-theme");
+            const newTheme = isLight ? "dark-theme" : "light-theme";
+            body.classList.remove(isLight ? "light-theme" : "dark-theme");
+            body.classList.add(newTheme);
+
+            const themedElements = document.querySelectorAll('header, footer, .sidebar, .menu-item');
+            themedElements.forEach(el => {
+                el.classList.remove(isLight ? "light-theme" : "dark-theme");
+                el.classList.add(newTheme);
+            });
+        }
+
+        function changePassword() {
+            // Loading effect on password change page
+            document.getElementById('loading').classList.add('show');
+            setTimeout(() => {
+                window.location.href = "ubah-sandi.html"; // Redirect to password change page
+            }, 1000);
+        }
+
+        function logout() {
+            window.location.href = "index.html"; // Redirect to login page
+        }
+
+        setInterval(updateTime, 1000);
+
+        function updateTime() {
+            const now = new Date();
+            document.getElementById("current-time").textContent = now.toLocaleTimeString();
+            document.getElementById("current-date").textContent = now.toLocaleDateString();
+        }
+
+        window.onload = () => {
+            document.getElementById("default-apikey").textContent = "AwanBrayy010308";
+            showContent('dashboard');
+        };
+    </script>
+</body>
+</html>

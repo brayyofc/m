@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Api-Wanz</title>
     <style>
-   
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -91,7 +90,6 @@
             <div class="profile-icon" onclick="window.location.href='login.html'">👤</div>
         </header>
 
-
         <main>
             <div class="welcome-text">
                 <h1 id="typing-effect"></h1>
@@ -100,16 +98,20 @@
                     development dan berbagai kebutuhan aplikasi lainnya.
                 </p>
 
-
                 <button class="cta-button" onclick="window.location.href='signup.html'">Get Started</button>
             </div>
         </main>
-    </div>
 
+        <!-- Audio dengan autoplay -->
+        <audio autoplay loop>
+            <source src="https://files.catbox.moe/56unrm.mp3" type="audio/mpeg">
+            Browser Anda tidak mendukung elemen audio.
+        </audio>
+    </div>
 
     <script>
         const typingEffect = document.getElementById("typing-effect");
-        const text = ["Welcome to Api-Wanz", "Explore Our API"];
+        const text = ["Wlcome to Api-Wanz", "Explore Our API"];
         let index = 0, charIndex = 0;
 
         function typeWriter() {
